@@ -1,4 +1,5 @@
 ### GET all Italy
+@baseUrl = https://api.electricitymap.org
 GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT
 auth-token: {{apiKey}}
 
