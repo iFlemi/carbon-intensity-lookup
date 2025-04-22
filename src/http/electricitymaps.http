@@ -1,0 +1,27 @@
+### GET all Italy
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT
+auth-token: {{apiKey}}
+
+### GET Central North
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-CNO
+auth-token: {{apiKey}}
+
+### GET Central South
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-CSO
+auth-token: {{apiKey}}
+
+### GET North Italy
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-NO
+auth-token: {{apiKey}}
+
+### GET Sardinia
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-SAR
+auth-token: {{apiKey}}
+
+### GET Sicily
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-SIC
+auth-token: {{apiKey}}
+
+### GET South
+GET {{baseUrl}}//v3/carbon-intensity/history?zone=IT-SO
+auth-token: {{apiKey}}
