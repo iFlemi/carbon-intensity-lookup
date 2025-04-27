@@ -15,5 +15,5 @@ export const partitionEithers = <A, E = Error>(self: Either<E, A>[]): [E[], A[]]
 }
 
 export const getRoundedAverage = (input: number[]) =>
-    Math.round(input.reduce((previous, current) => previous + current) / input.length)
+    Math.round(input.reduce((previous, current) => previous + current, 0) / input.length)
 
