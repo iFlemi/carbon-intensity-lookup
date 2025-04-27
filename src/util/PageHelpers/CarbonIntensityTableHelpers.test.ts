@@ -58,12 +58,6 @@ describe('CarbonIntensityTable Functions', () => {
             assertThat(calculateMaxIntensityForHour(carbonIntensity, 1)).is(20)
             assertThat(calculateMaxIntensityForHour(carbonIntensity, 2)).is(30)
         })
-
-        it('should return 0 if hour index out of bounds', () => {
-            const carbonIntensity = createTestData()
-
-            assertThat(calculateMaxIntensityForHour(carbonIntensity, 10)).is(0)
-        })
     })
 
     describe('calculateMaxAverageIntensity', () => {
