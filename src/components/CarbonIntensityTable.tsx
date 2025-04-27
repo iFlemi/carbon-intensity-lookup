@@ -5,6 +5,7 @@ import {
     calculateMaxIntensityForHour,
     getHourIndices, isMaxValue
 } from "../util/PageHelpers/CarbonIntensityTableHelpers.ts";
+import {PrettyPrinter} from "mismatched";
 
 type CarbonIntensityRowEntryProps = {
     carbonIntensity: CarbonIntensityModel[]
@@ -32,17 +33,18 @@ const CarbonIntensityTable: React.FC<CarbonIntensityRowEntryProps> = ({ carbonIn
                 <div key={i} className="font-bold border p-2">{region.zoneName}</div>
             ))}
 
-            {hourIndices.map(hour => {
-                const maxIntensityForHour = calculateMaxIntensityForHour(carbonIntensity, hour);
+            {hourIndices.map(hourIndex => {
+                PrettyPrinter.logToConsole(hourIndex)
+                const maxIntensityForHour = calculateMaxIntensityForHour(carbonIntensity, hourIndex);
 
                 return (
-                    <React.Fragment key={hour}>
+                    <React.Fragment key={hourIndex}>
                         <div className="border p-2">
-                            {carbonIntensity[0].carbonIntensityData[hour].dateTime.toFormat('dd/LL HH:mm')}
+                            {carbonIntensity[0].carbonIntensityData[hourIndex].dateTime.toFormat('dd/LL HH:mm')}
                         </div>
                         {
                             carbonIntensity.map((region, i) => {
-                                const value = region.carbonIntensityData[hour].carbonIntensity;
+                                const value = region.carbonIntensityData[hourIndex].carbonIntensity;
                                 const isMax = isMaxValue(value, maxIntensityForHour);
                                 return (
                                     <div
