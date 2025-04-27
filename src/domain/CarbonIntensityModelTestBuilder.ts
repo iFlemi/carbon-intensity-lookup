@@ -18,6 +18,11 @@ export class CarbonIntensityModelTestBuilder {
         return this
     }
 
+    withDayAverage(dayAverage: number) {
+        this.carbonIntensityModel.dayAverageCarbonIntensity = dayAverage
+        return this
+    }
+
     to() {
         return this.carbonIntensityModel
     }
@@ -26,10 +31,10 @@ export class CarbonIntensityModelTestBuilder {
 export class CarbonIntensityDataPointTestBuilder {
     private dataPoint: CarbonIntensityDataPoint
 
-    constructor(dateTime?: DateTime) {
+    constructor(dateTime?: DateTime, intensity?: number) {
         this.dataPoint = {
             dateTime: dateTime ??  DateTime.fromISO(new Date(2024, 12, 25).toISOString()),
-            carbonIntensity: primitiveBuilder.int(0, 1000),
+            carbonIntensity: intensity ?? primitiveBuilder.int(0, 1000),
             carbonIntensityUnit: "gCO2eq/kWh"
         }
     }

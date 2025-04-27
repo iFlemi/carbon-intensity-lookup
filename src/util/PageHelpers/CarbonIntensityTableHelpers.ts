@@ -5,8 +5,11 @@ export const getHourIndices = (carbonIntensity: CarbonIntensityModel[]): number[
     return carbonIntensity[0].carbonIntensityData.map((_, i) => i)
 }
 
-export const calculateMaxIntensityForHour = (carbonIntensity: CarbonIntensityModel[], hour: number): number => {
-    const allForHour = carbonIntensity.map(ci => ci.carbonIntensityData[hour].carbonIntensity);
+export const calculateMaxIntensityForHour = (carbonIntensity: CarbonIntensityModel[], hourIndex: number): number => {
+    //for simplicity: proper error handling would be to make this use a Result/Option type.
+    if (hourIndex > carbonIntensity.length) return 0
+
+    const allForHour = carbonIntensity.map(ci => ci.carbonIntensityData[hourIndex].carbonIntensity);
     return Math.max(...allForHour)
 }
 
