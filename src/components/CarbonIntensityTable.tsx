@@ -5,7 +5,6 @@ import {
     calculateMaxIntensityForHour,
     getHourIndices, isMaxValue
 } from "../util/PageHelpers/CarbonIntensityTableHelpers.ts";
-import {PrettyPrinter} from "mismatched";
 
 type CarbonIntensityRowEntryProps = {
     carbonIntensity: CarbonIntensityModel[]
@@ -34,7 +33,6 @@ const CarbonIntensityTable: React.FC<CarbonIntensityRowEntryProps> = ({ carbonIn
             ))}
 
             {hourIndices.map(hourIndex => {
-                PrettyPrinter.logToConsole(hourIndex)
                 const maxIntensityForHour = calculateMaxIntensityForHour(carbonIntensity, hourIndex);
 
                 return (
