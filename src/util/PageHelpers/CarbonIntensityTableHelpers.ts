@@ -6,7 +6,10 @@ export const getHourIndices = (carbonIntensity: CarbonIntensityModel[]): number[
 }
 
 export const calculateMaxIntensityForHour = (carbonIntensity: CarbonIntensityModel[], hourIndex: number): number => {
-    const allForHour = carbonIntensity.map(ci => ci.carbonIntensityData[hourIndex].carbonIntensity);
+    const allForHour = carbonIntensity.map(ci => {
+        if (hourIndex > ci.carbonIntensityData.length) return 0
+        return ci.carbonIntensityData[hourIndex].carbonIntensity
+    })
     return Math.max(...allForHour)
 }
 
