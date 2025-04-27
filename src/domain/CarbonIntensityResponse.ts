@@ -1,5 +1,6 @@
 import {DateTime} from "luxon";
 import {CarbonIntensityDataPoint, CarbonIntensityModel} from "./CarbonIntensityModel.ts";
+import {getRoundedAverage} from "../util/Arrays.ts";
 
 export type EmissionFactorType = 'lifecycle' | 'direct'
 
@@ -44,13 +45,10 @@ export const toModel = (response: CarbonIntensityResponse): CarbonIntensityModel
                carbonIntensityUnit: "gCO2eq/kWh"
            }))
 
-    const dayAverageCarbonIntensity = Math.round((carbonIntensityData
-        .map(cid => cid.carbonIntensity)
-        .reduce((previous, current) => previous + current)) / carbonIntensityData.length)
-
    return {
        carbonIntensityData,
-       dayAverageCarbonIntensity,
+       dayAverageCarbonIntensity: getRoundedAverage(
+           carbonIntensityData.map(cid => cid.carbonIntensity)),
        zoneName: ZoneDisplayNames[response.zone]
    }
 }

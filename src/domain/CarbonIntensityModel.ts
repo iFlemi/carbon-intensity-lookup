@@ -12,5 +12,3 @@ export type CarbonIntensityDataPoint = {
     //hardcoding for simplicity, should be typed
     carbonIntensityUnit: 'gCO2eq/kWh'
 }
-
-

@@ -1,15 +1,23 @@
 import { CarbonIntensityModel } from "../domain/CarbonIntensityModel.ts";
 import * as React from "react";
+import {
+    calculateMaxAverageIntensity,
+    calculateMaxIntensityForHour,
+    getHourIndices, isMaxValue
+} from "../util/PageHelpers/CarbonIntensityTableHelpers.ts";
 
 type CarbonIntensityRowEntryProps = {
     carbonIntensity: CarbonIntensityModel[]
 }
 
 const CarbonIntensityTable: React.FC<CarbonIntensityRowEntryProps> = ({ carbonIntensity }) => {
-    const hours = carbonIntensity[0]
-        .carbonIntensityData.map((_, i) => i)
+    if (!carbonIntensity || carbonIntensity.length === 0) {
+        return <div>No carbon intensity data available</div>;
+    }
 
-    const columnCount = carbonIntensity.length + 1
+    const hourIndices = getHourIndices(carbonIntensity);
+    const columnCount = carbonIntensity.length + 1;
+    const maxAverageIntensity = calculateMaxAverageIntensity(carbonIntensity);
 
     return (
         <div
@@ -24,9 +32,8 @@ const CarbonIntensityTable: React.FC<CarbonIntensityRowEntryProps> = ({ carbonIn
                 <div key={i} className="font-bold border p-2">{region.zoneName}</div>
             ))}
 
-            {hours.map(hour => {
-                const allForHour = carbonIntensity.map(ci => ci.carbonIntensityData[hour].carbonIntensity)
-                const max = Math.max(...allForHour)
+            {hourIndices.map(hour => {
+                const maxIntensityForHour = calculateMaxIntensityForHour(carbonIntensity, hour);
 
                 return (
                     <React.Fragment key={hour}>
@@ -35,30 +42,33 @@ const CarbonIntensityTable: React.FC<CarbonIntensityRowEntryProps> = ({ carbonIn
                         </div>
                         {
                             carbonIntensity.map((region, i) => {
-                            const value = region.carbonIntensityData[hour].carbonIntensity
-                            const isMax = value === max
-                            return (
-                                <div
-                                    key={i}
-                                    className={`border p-2 ${isMax ? 'bg-green-800' : ''}`}>
-                                    {value}
-                                </div>
-                            )})
+                                const value = region.carbonIntensityData[hour].carbonIntensity;
+                                const isMax = isMaxValue(value, maxIntensityForHour);
+                                return (
+                                    <div
+                                        key={i}
+                                        className={`border p-2 ${isMax ? 'bg-green-800' : ''}`}>
+                                        {value}
+                                    </div>
+                                );
+                            })
                         }
                     </React.Fragment>
-                )
+                );
             })}
 
             <div className="font-bold border p-2">24 hr Average</div>
             {carbonIntensity.map((region, i) => {
-                const maxAverage = Math.max(...carbonIntensity.map(ci => ci.dayAverageCarbonIntensity))
-                const value = region.dayAverageCarbonIntensity
-                const isMax = value === maxAverage
+                const value = region.dayAverageCarbonIntensity;
+                const isMax = isMaxValue(value, maxAverageIntensity);
                 return (
-                    <div key={i} className={`font-bold border p-2 ${isMax ? 'bg-green-800' : ''}`}>{value}</div>
-                )})}
+                    <div key={i} className={`font-bold border p-2 ${isMax ? 'bg-green-800' : ''}`}>
+                        {value}
+                    </div>
+                );
+            })}
         </div>
-    )
-}
+    );
+};
 
-export default CarbonIntensityTable
+export default CarbonIntensityTable;
