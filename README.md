@@ -17,3 +17,4 @@ export const API_KEY = 'api_key_goes_here'
 ```
 3) `npm i`
 4) `npm run dev`
+5) `npm run tests` for tests
