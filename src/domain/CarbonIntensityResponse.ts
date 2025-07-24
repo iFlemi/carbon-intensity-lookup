@@ -5,7 +5,7 @@ import {getRoundedAverage} from "../util/Arrays.ts";
 export type EmissionFactorType = 'lifecycle' | 'direct'
 
 //typing this parameter so that it can only ever be a valid input - using as const / typeof ZoneCodes to use it as both a type array and a string array
-export const ZoneCodes = [/*'IT' ,*/'IT-CNO' , 'IT-CSO' , 'IT-NO' , 'IT-SO' , 'IT-SAR' , 'IT-SIC'] as const
+export const ZoneCodes = ['IT-CNO' , 'IT-CSO' , 'IT-NO' , 'IT-SO' , 'IT-SAR' , 'IT-SIC'] as const
 export type ZoneCode = (typeof ZoneCodes)[number]
 
 export const ZoneDisplayNames: Record<ZoneCode, string> = {

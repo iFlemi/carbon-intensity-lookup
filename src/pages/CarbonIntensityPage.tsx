@@ -7,24 +7,24 @@ import {GetMilliSecondsToNextHour} from "../util/DateTime.ts";
 
 const CarbonIntensityPage: React.FC = () => {
     const [carbonIntensityData, setCarbonIntensityData]= useState<CarbonIntensityModel[]>([])
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>("");
-
-    useEffect(() => {
-        const fetchData = async () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string>("")
+        
+    const fetchData = async () => {
             try {
                 setIsLoading(true)
                 const data = await getCarbonIntensityForAllRegions()
                 setCarbonIntensityData(data)
                 setIsLoading(false)
             } catch (err) {
-                setError("Failed to fetch carbon intensity data");
-                setIsLoading(false);
-                console.error(err);
-            }
-        }
+                setError("Failed to fetch carbon intensity data")
+                setIsLoading(false)
+                console.error(err)
+                } 
+           }
+    
+    useEffect(() => {
         fetchData()
-
         const millisecondUntilNextHour = GetMilliSecondsToNextHour()
         console.log(`fetching data in ${millisecondUntilNextHour/1000} sec`)
         setTimeout(() => {
